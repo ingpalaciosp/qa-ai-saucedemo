@@ -53,7 +53,7 @@ def test_caso_3_problem_user_imagenes_distintas(page: Page):
 
 def test_caso_4_username_vacio(page: Page):
     login(page, "", PASSWORD)
-    expect(mensaje_error(page)).to_have_text("Epic sadface: mensaje roto a propósito")
+    expect(mensaje_error(page)).to_have_text("Epic sadface: Username is required")
     expect(page).to_have_url(URL + "/")
 
 
