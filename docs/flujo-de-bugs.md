@@ -35,3 +35,8 @@ stateDiagram-v2
 - Un bug solo pasa a **Finalizada** cuando el QA lo verifica, no cuando el desarrollador dice que está arreglado.
 - Al pasar a **Cerrada**, se deja un comentario con el motivo (por ejemplo: "Duplicado de #3").
 - Cada bug lleva etiquetas de **Severidad**, **Prioridad**, **Componente** y **Módulo**.
+
+## Convención de títulos
+`Bug Fixing - [Flujo] - [Módulo] - [Pantalla] - Descripción del problema`
+
+Ejemplo: `Bug Fixing - Login - Inventory - Products - Todas las imágenes de productos muestran la misma foto de un perro`
