@@ -1,5 +1,5 @@
 # QA con IA sobre Sauce Demo
-
+[![Tests de QA](https://github.com/ingpalaciosp/qa-ai-saucedemo/actions/workflows/tests.yml/badge.svg)](https://github.com/ingpalaciosp/qa-ai-saucedemo/actions/workflows/tests.yml)
 Proyecto de portafolio de QA sobre [Sauce Demo](https://www.saucedemo.com), una tienda online de práctica.
 Uso IA para generar casos de prueba y después los valido uno a uno contra la aplicación real,
 para medir cuánto acierta y documentar dónde se equivoca.
@@ -32,6 +32,8 @@ Casos: [casos/login-v2-con-contexto.md](casos/login-v2-con-contexto.md)
   y lo completé con lo que observé: "Epic sadface: Username is required".
 - **Lección aprendida:** si le doy a la IA el contexto real, no inventa, y si le pido que no suponga,
   admite lo que no sabe.
+
+  
 
 ## Próximamente
 
