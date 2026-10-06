@@ -41,7 +41,7 @@ def test_caso_3_login_problem_user(page: Page):
 
 @pytest.mark.xfail(reason="Bug conocido: issue #1", strict=True)
 def test_caso_3_problem_user_imagenes_distintas(page: Page):
-    login(page, "problem_user", PASSWORD)
+    login(page, "problem_use", PASSWORD)
     expect(page).to_have_url(URL_INVENTARIO)
 
     imagenes = page.locator("img.inventory_item_img")
@@ -53,7 +53,7 @@ def test_caso_3_problem_user_imagenes_distintas(page: Page):
 
 def test_caso_4_username_vacio(page: Page):
     login(page, "", PASSWORD)
-    expect(mensaje_error(page)).to_have_text("Epic sadface: Username is required")
+    expect(mensaje_error(page)).to_have_text("Epic sadface: mensaje roto a propósito")
     expect(page).to_have_url(URL + "/")
 
 
