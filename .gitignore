@@ -1,2 +1,7 @@
 .pytest_cache/
 __pycache__/
+.playwright-mcp/
+.claude/settings.local.json
+.venv/
+test-results/
+informe.html
