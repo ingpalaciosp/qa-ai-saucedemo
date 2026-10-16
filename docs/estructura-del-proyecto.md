@@ -26,7 +26,7 @@ saucedemo/
 │
 ├── tests/                      🔍 Los inspectores (los tests)
 │   ├── conftest.py
-│   └── test_login_casos.py
+│   └── test_login.py
 │
 ├── data/                       🥫 La despensa (datos de prueba)
 │   ├── __init__.py
@@ -75,7 +75,7 @@ saucedemo/
 
 | Archivo | Qué hace |
 |---|---|
-| `test_login_casos.py` | Los 9 tests de login. Cada uno usa las páginas para actuar y `expect()` para comprobar el resultado. |
+| `test_login.py` | Los 9 tests de login. Cada uno usa las páginas para actuar y `expect()` para comprobar el resultado. |
 | `conftest.py` | Un archivo **especial** de pytest. Contiene las **fixtures** compartidas. |
 
 > 💡 **¿Qué es una fixture?** Es un "ayudante" que prepara algo antes del test y se lo entrega listo.
@@ -188,7 +188,7 @@ Cuando escribes `pytest`, pasa esto:
 
 ```
 1. pytest lee pytest.ini         → "los tests están en tests/, la web es saucedemo.com"
-2. pytest abre tests/            → encuentra test_login_casos.py
+2. pytest abre tests/            → encuentra test_login.py
 3. pytest lee conftest.py        → prepara las fixtures (abre la página de login)
 4. El test toma datos de data/   → usuario y contraseña
 5. El test usa pages/            → login_page.login(usuario, password)

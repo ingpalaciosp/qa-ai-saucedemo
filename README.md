@@ -35,8 +35,19 @@ Casos: [casos/login-v2-con-contexto.md](casos/login-v2-con-contexto.md)
 
   
 
+## Automatización
+
+Los casos de login validados están automatizados con Python + Pytest + Playwright, usando Page Object Model
+(`pages/`), datos separados (`data/`) y tests en `tests/`. Se ejecutan en GitHub Actions en cada push y PR.
+
+```bash
+pip install -r requirements.txt
+python -m playwright install chromium
+pytest -v
+```
+
 ## Próximamente
 
-- Automatización de los casos validados con Playwright.
+- Automatización de los casos de carrito y checkout.
 - Agente explorador con IA que navega la web y reporta bugs.
 - Playwright Agents (planner, generator, healer) para generar y reparar tests.
