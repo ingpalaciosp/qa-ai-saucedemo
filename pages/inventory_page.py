@@ -10,6 +10,14 @@ class InventoryPage:
         self.page = page
         # Cada imagen tiene un data-test que termina en "-img" (ej. "inventory-item-sauce-labs-backpack-img")
         self.imagenes_productos = page.locator('img[data-test$="-img"]')
+        self.enlace_carrito = page.locator('[data-test="shopping-cart-link"]')
+
+    def agregar_al_carrito(self, producto_id: str):
+        # producto_id es la parte final del data-test, por ejemplo "sauce-labs-backpack"
+        self.page.locator(f'[data-test="add-to-cart-{producto_id}"]').click()
+
+    def ir_al_carrito(self):
+        self.enlace_carrito.click()
 
     def obtener_src_imagenes(self) -> list[str]:
         # .all() no espera: primero se espera a que aparezca al menos una imagen
