@@ -21,6 +21,7 @@ saucedemo/
 │
 ├── pages/                      🍳 La cocina (Page Objects)
 │   ├── __init__.py
+│   ├── base_page.py
 │   ├── login_page.py
 │   ├── inventory_page.py
 │   ├── cart_page.py
@@ -69,13 +70,16 @@ saucedemo/
 
 | Archivo | Qué hace |
 |---|---|
-| `login_page.py` | La pantalla de login. Sabe dónde están el usuario, la contraseña, el botón y el mensaje de error. Tiene las acciones `abrir()` y `login()`. |
+| `base_page.py` | La clase "madre" de todas las páginas. Guarda la página del navegador (`self.page`) y tiene la acción `abrir()`, que va a la `RUTA` de cada página. Las demás páginas **heredan** de ella y no repiten ese código. |
+| `login_page.py` | La pantalla de login. Sabe dónde están el usuario, la contraseña, el botón y el mensaje de error. Tiene la acción `login()`. |
 | `inventory_page.py` | La pantalla de productos. Sabe dónde están las imágenes, los botones "Add to cart" y el icono del carrito. Tiene las acciones `agregar_al_carrito()`, `ir_al_carrito()` y `obtener_src_imagenes()`, que devuelve la dirección de cada foto. |
 | `cart_page.py` | La pantalla del carrito. Sabe dónde está el botón "Checkout" y tiene la acción `ir_al_checkout()`. |
-| `checkout_step_one_page.py` | El paso 1 del checkout (*Your Information*). Sabe dónde están el título, los tres campos y el botón "Continue". Tiene las acciones `abrir()` y `continuar()`, que rellena los campos y pulsa "Continue". |
-| `checkout_step_two_page.py` | El paso 2 del checkout (*Overview*). Sabe dónde están el resumen, los productos con su nombre, precio y cantidad, y el botón "Finish". Tiene las acciones `abrir()` y `finalizar()`. |
-| `checkout_complete_page.py` | La confirmación del pedido (*Complete!*). Sabe dónde están el título y el mensaje de confirmación. Tiene la acción `abrir()`. |
+| `checkout_step_one_page.py` | El paso 1 del checkout (*Your Information*). Sabe dónde están el título, los tres campos y el botón "Continue". Tiene la acción `continuar()`, que rellena los campos y pulsa "Continue". |
+| `checkout_step_two_page.py` | El paso 2 del checkout (*Overview*). Sabe dónde están el resumen, los productos con su nombre, precio y cantidad, y el botón "Finish". Tiene la acción `finalizar()`. |
+| `checkout_complete_page.py` | La confirmación del pedido (*Complete!*). Sabe dónde están el título y el mensaje de confirmación. |
 | `__init__.py` | Un archivo vacío. Le dice a Python "esta carpeta es un **paquete**", y gracias a eso puedes escribir `from pages.login_page import LoginPage`. |
+
+> 💡 **¿Qué es heredar?** `class CartPage(BasePage):` significa que `CartPage` recibe todo lo de `BasePage` sin escribirlo. Por eso todas las páginas tienen `abrir()` aunque no aparezca en su archivo.
 
 > 💡 **¿Qué es `RUTA`?** Cada página guarda su dirección dentro de la web, por ejemplo `RUTA = "/cart.html"`.
 > Los tests la usan para comprobar a qué página llegaron (`base_url + CartPage.RUTA`) y `abrir()` la usa para ir directo.

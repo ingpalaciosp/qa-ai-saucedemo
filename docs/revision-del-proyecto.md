@@ -28,7 +28,7 @@ El resto del documento se deja como estaba: es la foto del proyecto el día de l
 | 🟢 B5 | MCP con `@latest` | ✅ Resuelto | `.mcp.json` fija `@playwright/mcp@0.0.83` |
 | 🟢 B6 | README desactualizado | ✅ Resuelto | La automatización está en resultados |
 
-Del apartado 7: la fixture `usuario_logueado` existe con el nombre `iniciar_sesion`. La `BasePage` del apartado 6 está pendiente (tarjeta F1-06).
+Del apartado 7: la fixture `usuario_logueado` existe con el nombre `iniciar_sesion`. La `BasePage` del apartado 6 está hecha (tarjeta F1-06): `pages/base_page.py`, y las 6 páginas heredan de ella.
 
 ---
 
