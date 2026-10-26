@@ -27,6 +27,8 @@ jobs:
         run: python -m playwright install --with-deps chromium
 
       - name: Ejecutar los tests
+        env:
+          SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
         run: pytest -v --html=informe.html --self-contained-html
 
       - name: Guardar el informe
