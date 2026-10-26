@@ -1,13 +1,14 @@
 from playwright.sync_api import Page
+from pages.base_page import BasePage
 
 
-class CheckoutStepTwoPage:
+class CheckoutStepTwoPage(BasePage):
     """Paso 2 del checkout (Overview): selectores y acciones, sin aserciones."""
 
     RUTA = "/checkout-step-two.html"
 
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
         self.titulo = page.locator('[data-test="title"]')
         self.resumen = page.locator('[data-test="checkout-summary-container"]')
         self.etiqueta_cantidad = page.locator('[data-test="cart-quantity-label"]')
@@ -17,9 +18,6 @@ class CheckoutStepTwoPage:
         self.cantidades_productos = page.locator('[data-test="item-quantity"]')
         self.botones_remove = page.locator('[data-test="cart-list"] [data-test^="remove-"]')
         self.boton_finish = page.locator('[data-test="finish"]')
-
-    def abrir(self):
-        self.page.goto(self.RUTA)
 
     def finalizar(self):
         self.boton_finish.click()

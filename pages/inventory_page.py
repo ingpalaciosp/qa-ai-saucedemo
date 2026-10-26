@@ -1,13 +1,14 @@
 from playwright.sync_api import Page
+from pages.base_page import BasePage
 
 
-class InventoryPage:
+class InventoryPage(BasePage):
     """Pantalla de productos de SauceDemo: selectores y acciones, sin aserciones."""
 
     RUTA = "/inventory.html"
 
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
         # Cada imagen tiene un data-test que termina en "-img" (ej. "inventory-item-sauce-labs-backpack-img")
         self.imagenes_productos = page.locator('img[data-test$="-img"]')
         self.enlace_carrito = page.locator('[data-test="shopping-cart-link"]')
