@@ -22,25 +22,34 @@ saucedemo/
 ├── pages/                      🍳 La cocina (Page Objects)
 │   ├── __init__.py
 │   ├── login_page.py
-│   └── inventory_page.py
+│   ├── inventory_page.py
+│   ├── cart_page.py
+│   ├── checkout_step_one_page.py
+│   ├── checkout_step_two_page.py
+│   └── checkout_complete_page.py
 │
 ├── tests/                      🔍 Los inspectores (los tests)
 │   ├── conftest.py
-│   └── test_login.py
+│   ├── test_login.py
+│   └── test_checkout.py
 │
 ├── data/                       🥫 La despensa (datos de prueba)
 │   ├── __init__.py
-│   └── usuarios.py
+│   ├── usuarios.py
+│   └── checkout.py
 │
 ├── casos/                      📖 Casos de prueba escritos a mano
 ├── docs/                       📖 Documentación
 │
-├── .github/workflows/tests.yml 🤖 El inspector automático (CI)
+├── .github/
+│   ├── workflows/tests.yml     🤖 El inspector automático (CI)
+│   └── ISSUE_TEMPLATE/bug.md   🐞 Plantilla para reportar bugs
 │
 ├── pytest.ini                  ⚙️ Configuración de pytest
 ├── requirements.txt            📦 Lista de "compras" (librerías)
 ├── README.md                   🪪 La portada del proyecto
 ├── .gitignore                  🚫 Lo que git no debe guardar
+├── .gitattributes              ↩️ Finales de línea LF para todos
 │
 ├── .claude/  .mcp.json         🤝 Configuración para trabajar con IA
 │
@@ -61,8 +70,16 @@ saucedemo/
 | Archivo | Qué hace |
 |---|---|
 | `login_page.py` | La pantalla de login. Sabe dónde están el usuario, la contraseña, el botón y el mensaje de error. Tiene las acciones `abrir()` y `login()`. |
-| `inventory_page.py` | La pantalla de productos. Sabe dónde están las imágenes y tiene la acción `obtener_src_imagenes()`, que devuelve la dirección de cada foto. |
+| `inventory_page.py` | La pantalla de productos. Sabe dónde están las imágenes, los botones "Add to cart" y el icono del carrito. Tiene las acciones `agregar_al_carrito()`, `ir_al_carrito()` y `obtener_src_imagenes()`, que devuelve la dirección de cada foto. |
+| `cart_page.py` | La pantalla del carrito. Sabe dónde está el botón "Checkout" y tiene la acción `ir_al_checkout()`. |
+| `checkout_step_one_page.py` | El paso 1 del checkout (*Your Information*). Sabe dónde están el título, los tres campos y el botón "Continue". Tiene las acciones `abrir()` y `continuar()`, que rellena los campos y pulsa "Continue". |
+| `checkout_step_two_page.py` | El paso 2 del checkout (*Overview*). Sabe dónde están el resumen, los productos con su nombre, precio y cantidad, y el botón "Finish". Tiene las acciones `abrir()` y `finalizar()`. |
+| `checkout_complete_page.py` | La confirmación del pedido (*Complete!*). Sabe dónde están el título y el mensaje de confirmación. Tiene la acción `abrir()`. |
 | `__init__.py` | Un archivo vacío. Le dice a Python "esta carpeta es un **paquete**", y gracias a eso puedes escribir `from pages.login_page import LoginPage`. |
+
+> 💡 **¿Qué es `RUTA`?** Cada página guarda su dirección dentro de la web, por ejemplo `RUTA = "/cart.html"`.
+> Los tests la usan para comprobar a qué página llegaron (`base_url + CartPage.RUTA`) y `abrir()` la usa para ir directo.
+> Si la dirección cambia, se corrige en un solo sitio.
 
 > 💡 **Regla de oro:** en `pages/` **no se comprueba nada**. Las páginas solo *hacen* cosas;
 > quienes *verifican* son los tests.
@@ -76,16 +93,24 @@ saucedemo/
 | Archivo | Qué hace |
 |---|---|
 | `test_login.py` | Los 9 tests de login. Cada uno usa las páginas para actuar y `expect()` para comprobar el resultado. |
+| `test_checkout.py` | Los 7 tests del checkout: entrar con productos, continuar con datos válidos, revisar el resumen, finalizar el pedido y abrir las 3 pantallas del checkout sin haber iniciado sesión. |
 | `conftest.py` | Un archivo **especial** de pytest. Contiene las **fixtures** compartidas. |
 
 > 💡 **¿Qué es una fixture?** Es un "ayudante" que prepara algo antes del test y se lo entrega listo.
-> Tu `conftest.py` tiene tres:
+> Tu `conftest.py` tiene seis:
 >
-> - `login_page`: crea la página de login y la abre, así el test empieza ya en el login.
 > - `url_login`: la dirección de la página de login.
 > - `url_inventario`: la dirección de la página de productos.
+> - `login_page`: crea la página de login y la abre, así el test empieza ya en el login.
+> - `iniciar_sesion`: inicia sesión (con el usuario estándar si no se indica otro) y deja al test en el inventario.
+> - `carrito_a`: inicia sesión, añade "Sauce Labs Backpack" y "Sauce Labs Bike Light" y deja al test en el carrito.
+> - `paso_1_carrito_a` y `paso_2_carrito_a`: avanzan desde el Carrito A hasta el paso 1 o el paso 2 del checkout.
 >
 > Lo que pongas en `conftest.py` lo pueden usar **todos** los tests sin importarlo. Pytest lo encuentra solo.
+
+> 💡 **Fixtures encadenadas:** `paso_2_carrito_a` usa `paso_1_carrito_a`, que usa `carrito_a`, que usa `iniciar_sesion`.
+> Cada una da un paso más, como las precondiciones de `casos/checkout.md`.
+> Así un test que necesita estar en el paso 2 solo pide `paso_2_carrito_a`, y pytest prepara todo lo anterior.
 
 ---
 
@@ -96,6 +121,7 @@ saucedemo/
 | Archivo | Qué hace |
 |---|---|
 | `usuarios.py` | Los usuarios de SauceDemo, la contraseña y los mensajes de error, cada uno con un nombre claro como `ERROR_USUARIO_BLOQUEADO`. |
+| `checkout.py` | Los datos del checkout: el comprador de referencia (`Alicia`, `Palacios`, `28001`), los productos del Carrito A con su precio, los títulos de cada paso y el mensaje de error al entrar sin sesión. |
 | `__init__.py` | Igual que en `pages/`: convierte la carpeta en paquete para poder importarla. |
 
 > 💡 **¿Por qué separarlo?** Si mañana cambia un mensaje de error, lo cambias **en un solo lugar**
@@ -117,7 +143,8 @@ saucedemo/
 | `docs/` | El diagrama del flujo de bugs (`flujo-de-bugs.md`), la revisión del proyecto (`revision-del-proyecto.md`) y este documento (`estructura-del-proyecto.md`). |
 
 > 💡 Esto se llama **trazabilidad**: cada test automático corresponde a un caso escrito aquí.
-> Por eso los tests tienen nombres como `caso_4_username_vacio`.
+> Por eso los tests llevan el Id del caso en el nombre, como `TC-LOGIN-004_username_vacio`
+> o `test_tc_checkout_024_finalizar_el_pedido`, y el caso dice `Automatizado: tests/test_checkout.py`.
 
 ---
 
@@ -142,6 +169,16 @@ El archivo indica los pasos:
 
 ---
 
+## 🐞 `.github/ISSUE_TEMPLATE/bug.md`: la plantilla de bugs
+
+**Para qué existe:** cuando creas un issue en GitHub y eliges **Bug**, la plantilla rellena el issue con la estructura de siempre: el título `Bug Fixing - [Flujo] - [Módulo] - [Pantalla] - ` y las etiquetas `bug` y `Componente: frontend`.
+
+Severidad, Prioridad y Módulo se añaden a mano. El flujo completo está en `docs/flujo-de-bugs.md`.
+
+> 💡 GitHub solo lee las plantillas que están en la rama `main`.
+
+---
+
 ## ⚙️ Archivos sueltos de la raíz
 
 | Archivo | Para qué sirve |
@@ -150,6 +187,7 @@ El archivo indica los pasos:
 | `requirements.txt` | La **lista de compras**: las librerías que necesita el proyecto, con su versión exacta. Se instalan con `pip install -r requirements.txt`. |
 | `README.md` | La **portada** del proyecto en GitHub. Explica qué es y muestra tus resultados. |
 | `.gitignore` | La lista de cosas que **git no debe guardar**, porque se generan solas o son privadas. |
+| `.gitattributes` | Obliga a guardar todos los archivos de texto con finales de línea **LF**, igual que el CI en Linux. Así Windows no cambia los finales de línea y no aparecen cambios "fantasma". |
 
 > 💡 **¿Qué es una traza?** Una "grabación" paso a paso de lo que hizo el test.
 > Si falla, la abres con `playwright show-trace` y ves exactamente qué pasó.
@@ -160,7 +198,7 @@ El archivo indica los pasos:
 
 | Archivo / carpeta | Para qué sirve |
 |---|---|
-| `.claude/` | La configuración de Claude Code y tu skill `casos-de-prueba`, que es tu plantilla para escribir casos. |
+| `.claude/` | La configuración de Claude Code y tus dos skills: `casos-de-prueba`, tu plantilla para escribir casos, y `reportar-bug`, que convierte un caso ❌ en el borrador de un issue y solo lo publica cuando tú lo apruebas. |
 | `.mcp.json` | Conecta el **servidor MCP de Playwright**. |
 
 > 💡 Un **MCP** es un "enchufe" que permite a la IA usar herramientas; en este caso,
@@ -188,10 +226,10 @@ Cuando escribes `pytest`, pasa esto:
 
 ```
 1. pytest lee pytest.ini         → "los tests están en tests/, la web es saucedemo.com"
-2. pytest abre tests/            → encuentra test_login.py
-3. pytest lee conftest.py        → prepara las fixtures (abre la página de login)
-4. El test toma datos de data/   → usuario y contraseña
-5. El test usa pages/            → login_page.login(usuario, password)
+2. pytest abre tests/            → encuentra test_login.py y test_checkout.py
+3. pytest lee conftest.py        → prepara las fixtures (abre el login, o llega hasta el paso 2 del checkout)
+4. El test toma datos de data/   → usuario y contraseña, o los datos del comprador
+5. El test usa pages/            → login_page.login(usuario, password) / paso_1.continuar(nombre, apellido, código)
 6. El test comprueba con expect  → "¿llegué al inventario?" / "¿salió el mensaje correcto?"
 7. Si falla → se guarda una traza en test-results/
 ```
@@ -199,4 +237,4 @@ Cuando escribes `pytest`, pasa esto:
 **En una frase:** `tests/` decide *qué* probar, `pages/` sabe *cómo* hacerlo,
 `data/` aporta *con qué* datos, y `pytest.ini` y `conftest.py` lo preparan todo.
 
-Cuando empieces con el carrito, aparecerán `pages/cart_page.py` y nuevos tests, pero la idea será la misma.
+Cuando automatices otra pantalla (por ejemplo, el ordenamiento de productos), la idea será la misma: una página nueva en `pages/`, sus datos en `data/` y sus tests en `tests/`.
