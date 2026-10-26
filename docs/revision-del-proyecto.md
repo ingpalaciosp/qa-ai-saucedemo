@@ -8,6 +8,30 @@ Stack del proyecto: **Python + Pytest + Playwright** (con el plugin `pytest-play
 
 ---
 
+## Estado a 26/10/2026
+
+De los 12 problemas de la revisión, 9 están resueltos, 1 está a medias y 2 siguen pendientes.
+El resto del documento se deja como estaba: es la foto del proyecto el día de la revisión.
+
+| Id | Problema | Estado | Cómo quedó |
+|---|---|---|---|
+| 🔴 A1 | Error de escritura `problem_use` | ✅ Resuelto | El test usa `USUARIO_PROBLEMA` de `data/usuarios.py` |
+| 🟡 M1 | Localizador dentro del test | ✅ Resuelto | `pages/inventory_page.py`, con localizadores `data-test` |
+| 🟡 M2 | Tests casi idénticos | ✅ Resuelto | `test_login_con_error` con `parametrize` (6 casos) |
+| 🟡 M3 | Datos de prueba dentro del test | ⚠️ A medias | Datos en `data/` y secret `SAUCE_PASSWORD` creado en GitHub. Falta pasarlo en `tests.yml` y quitar el valor por defecto de `os.getenv` |
+| 🟡 M4 | Fixtures de URL en el archivo de tests | ✅ Resuelto | En `tests/conftest.py` |
+| 🟡 M5 | `.gitignore` incompleto | ✅ Resuelto | Incluye `test-results/` e `informe.html` |
+| 🟢 B1 | Numeración duplicada | ✅ Resuelto | Ids `TC-LOGIN-001` a `TC-LOGIN-009` |
+| 🟢 B2 | `if` innecesarios en `login()` | ✅ Resuelto | `login()` sin `if` |
+| 🟢 B3 | Localizadores alternativos | ⏳ Pendiente | Tarjeta F1-10 de la ruta |
+| 🟢 B4 | Casos 7 y 8 sin automatizar | ⏳ Pendiente | `Standard_User` con mayúsculas y `/inventory.html` sin sesión |
+| 🟢 B5 | MCP con `@latest` | ✅ Resuelto | `.mcp.json` fija `@playwright/mcp@0.0.83` |
+| 🟢 B6 | README desactualizado | ✅ Resuelto | La automatización está en resultados |
+
+Del apartado 7: la fixture `usuario_logueado` existe con el nombre `iniciar_sesion`. La `BasePage` del apartado 6 está pendiente (tarjeta F1-06).
+
+---
+
 ## Índice
 
 1. [Glosario rápido](#1-glosario-rápido)
