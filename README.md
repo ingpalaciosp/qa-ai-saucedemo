@@ -11,8 +11,10 @@ acierta y dónde se equivoca, y automatizo solo los casos cuyo resultado esperad
 |---|---|
 | [`casos/`](casos/) | Casos de prueba escritos en Markdown con una plantilla única |
 | [`.claude/skills/casos-de-prueba/`](.claude/skills/casos-de-prueba/SKILL.md) | La plantilla y las reglas que sigue la IA para escribir los casos |
+| [`.claude/skills/reportar-bug/`](.claude/skills/reportar-bug/SKILL.md) | Las reglas para que la IA convierta un caso fallido en el borrador de un issue, que yo reviso antes de publicar |
 | [`pages/`](pages/) · [`data/`](data/) · [`tests/`](tests/) | Automatización con Page Object Model, datos de prueba y tests |
 | [`.github/workflows/`](.github/workflows/tests.yml) | CI: los tests se ejecutan en cada push y PR |
+| [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/bug.md) | Plantilla para reportar bugs con el mismo formato |
 | [`docs/`](docs/) | Estructura del proyecto, flujo de bugs y revisiones |
 
 ## Resultados
@@ -49,15 +51,15 @@ a mano el que el agente no pudo hacer.
 | Estado | Casos | Qué significa |
 |---|---|---|
 | ✅ Coincide | 24 | El resultado es el esperado |
-| ❌ No coincide | 8 | Bugs pendientes de reportar |
+| ❌ No coincide | 8 | Son 5 bugs: 4 reportados como issues y 1 pendiente de reproducir (TC-CHECKOUT-041) |
 | 🔍 Observado | 16 | No hay requisito: se anotó lo observado y la duda quedó como pregunta para el PO |
 
 **Bugs encontrados:**
-- Con el carrito vacío se puede entrar al checkout (TC-CHECKOUT-002).
-- El paso 1 acepta campos con solo espacios (TC-CHECKOUT-012, 038, 039).
-- El paso 1 acepta un código postal con letras y símbolos o de 1 carácter (TC-CHECKOUT-013, 037).
-- No se quitan los espacios delante y detrás del nombre: el PDF del pedido muestra "Alicia  Palacios" (TC-CHECKOUT-041).
-- Enviar el paso 1 con la tecla Enter redirige a `/cart.html` (TC-CHECKOUT-044, ejecutado a mano).
+- Con el carrito vacío se puede entrar al checkout (TC-CHECKOUT-002, [issue #6](https://github.com/ingpalaciosp/qa-ai-saucedemo/issues/6)).
+- El paso 1 acepta campos con solo espacios (TC-CHECKOUT-012, 038, 039, [issue #7](https://github.com/ingpalaciosp/qa-ai-saucedemo/issues/7)).
+- El paso 1 acepta un código postal con letras y símbolos o de 1 carácter (TC-CHECKOUT-013, 037, [issue #8](https://github.com/ingpalaciosp/qa-ai-saucedemo/issues/8)).
+- Enviar el paso 1 con la tecla Enter redirige a `/cart.html` (TC-CHECKOUT-044, ejecutado a mano, [issue #9](https://github.com/ingpalaciosp/qa-ai-saucedemo/issues/9)).
+- No se quitan los espacios delante y detrás del nombre: el PDF del pedido muestra "Alicia  Palacios" (TC-CHECKOUT-041, pendiente de reproducir antes de reportarlo).
 
 **Lecciones aprendidas:**
 - **Una variable por caso:** un caso que probaba tres campos a la vez se dividió en tres, para saber qué falla.
@@ -106,7 +108,7 @@ pytest -v
 ## Próximamente
 
 - Automatización de los casos de carrito.
-- Evaluación automática de la skill con [Promptfoo](https://www.promptfoo.dev/), para medir si cada cambio la mejora.
+- Evaluación automática de la skill con [DeepEval](https://github.com/confident-ai/deepeval) y un modelo local con Ollama, para medir si cada cambio la mejora.
 - Pruebas de API.
 - Agente explorador con IA que navega la web y reporta bugs.
 - Playwright Agents (planner, generator, healer) para generar y reparar tests.
