@@ -40,3 +40,6 @@ stateDiagram-v2
 `Bug Fixing - [Flujo] - [Módulo] - [Pantalla] - Descripción del problema`
 
 Ejemplo: `Bug Fixing - Login - Inventory - Products - Todas las imágenes de productos muestran la misma foto de un perro`
+
+## Plantilla
+Al crear un issue, elegir **Bug**: carga la estructura de [`.github/ISSUE_TEMPLATE/bug.md`](../.github/ISSUE_TEMPLATE/bug.md) con las etiquetas `bug` y `Componente: frontend`. Severidad, Prioridad y Módulo se añaden a mano.
