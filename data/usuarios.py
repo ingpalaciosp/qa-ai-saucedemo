@@ -2,9 +2,16 @@
 
 import os
 
-# La contraseña se lee de la variable de entorno SAUCE_PASSWORD.
-# Si no existe, se usa la contraseña pública de SauceDemo.
-PASSWORD = os.getenv("SAUCE_PASSWORD", "secret_sauce")
+from dotenv import load_dotenv
+
+# Carga las variables del archivo .env (en tu PC). En el CI vienen del secret de GitHub.
+load_dotenv()
+
+# La contraseña nunca se escribe en el código: se lee de la variable de entorno SAUCE_PASSWORD.
+PASSWORD = os.getenv("SAUCE_PASSWORD")
+if not PASSWORD:
+    raise RuntimeError("Falta SAUCE_PASSWORD: copia .env.example como .env y escribe la contraseña.")
+
 PASSWORD_INCORRECTA = "clave_incorrecta"
 
 USUARIO_ESTANDAR = "standard_user"
