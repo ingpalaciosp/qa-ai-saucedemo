@@ -50,6 +50,7 @@ saucedemo/
 ├── requirements.txt            📦 Lista de "compras" (librerías)
 ├── README.md                   🪪 La portada del proyecto
 ├── .gitignore                  🚫 Lo que git no debe guardar
+├── .env.example                🔑 Plantilla de las variables de entorno (sin valores)
 ├── .gitattributes              ↩️ Finales de línea LF para todos
 │
 ├── .claude/  .mcp.json         🤝 Configuración para trabajar con IA
@@ -131,9 +132,9 @@ saucedemo/
 > 💡 **¿Por qué separarlo?** Si mañana cambia un mensaje de error, lo cambias **en un solo lugar**
 > y todos los tests se actualizan.
 
-> 💡 **Variable de entorno:** la contraseña se lee con `os.getenv("SAUCE_PASSWORD", "secret_sauce")`.
-> Significa "busca la contraseña en el sistema; si no está, usa `secret_sauce`".
-> En proyectos reales así se evita escribir contraseñas en el código.
+> 💡 **Variable de entorno:** la contraseña se lee con `os.getenv("SAUCE_PASSWORD")` y no está escrita en ningún archivo del repositorio.
+> En tu PC viene del archivo `.env` (que carga `load_dotenv()` y no se sube a GitHub); en el CI, del secret de GitHub.
+> Si no existe, los tests se detienen con un mensaje que explica qué hacer. En proyectos reales así se evita escribir contraseñas en el código.
 
 ---
 
@@ -191,6 +192,7 @@ Severidad, Prioridad y Módulo se añaden a mano. El flujo completo está en `do
 | `requirements.txt` | La **lista de compras**: las librerías que necesita el proyecto, con su versión exacta. Se instalan con `pip install -r requirements.txt`. |
 | `README.md` | La **portada** del proyecto en GitHub. Explica qué es y muestra tus resultados. |
 | `.gitignore` | La lista de cosas que **git no debe guardar**, porque se generan solas o son privadas. |
+| `.env.example` | La **plantilla** de las variables de entorno: tiene el nombre `SAUCE_PASSWORD` sin su valor. Se copia como `.env` (privado, en `.gitignore`) y ahí se escribe la contraseña. |
 | `.gitattributes` | Obliga a guardar todos los archivos de texto con finales de línea **LF**, igual que el CI en Linux. Así Windows no cambia los finales de línea y no aparecen cambios "fantasma". |
 
 > 💡 **¿Qué es una traza?** Una "grabación" paso a paso de lo que hizo el test.
