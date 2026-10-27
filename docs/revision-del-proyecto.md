@@ -8,9 +8,9 @@ Stack del proyecto: **Python + Pytest + Playwright** (con el plugin `pytest-play
 
 ---
 
-## Estado a 26/10/2026
+## Estado a 27/10/2026
 
-De los 12 problemas de la revisión, 9 están resueltos, 1 está a medias y 2 siguen pendientes.
+De los 12 problemas de la revisión, 10 están resueltos y 2 siguen pendientes.
 El resto del documento se deja como estaba: es la foto del proyecto el día de la revisión.
 
 | Id | Problema | Estado | Cómo quedó |
@@ -18,7 +18,7 @@ El resto del documento se deja como estaba: es la foto del proyecto el día de l
 | 🔴 A1 | Error de escritura `problem_use` | ✅ Resuelto | El test usa `USUARIO_PROBLEMA` de `data/usuarios.py` |
 | 🟡 M1 | Localizador dentro del test | ✅ Resuelto | `pages/inventory_page.py`, con localizadores `data-test` |
 | 🟡 M2 | Tests casi idénticos | ✅ Resuelto | `test_login_con_error` con `parametrize` (6 casos) |
-| 🟡 M3 | Datos de prueba dentro del test | ⚠️ A medias | Datos en `data/` y secret `SAUCE_PASSWORD` creado en GitHub. Falta pasarlo en `tests.yml` y quitar el valor por defecto de `os.getenv` |
+| 🟡 M3 | Datos de prueba dentro del test | ✅ Resuelto | Datos en `data/`. La contraseña se lee de `SAUCE_PASSWORD` sin valor por defecto: en local desde `.env` y en el CI desde el secret |
 | 🟡 M4 | Fixtures de URL en el archivo de tests | ✅ Resuelto | En `tests/conftest.py` |
 | 🟡 M5 | `.gitignore` incompleto | ✅ Resuelto | Incluye `test-results/` e `informe.html` |
 | 🟢 B1 | Numeración duplicada | ✅ Resuelto | Ids `TC-LOGIN-001` a `TC-LOGIN-009` |

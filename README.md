@@ -99,9 +99,14 @@ convertiría en "lo correcto".
 **Trazabilidad:** cada test lleva el Id de su caso en el nombre (`test_tc_checkout_018_productos_del_resumen`)
 y el caso indica en Notas qué archivo lo automatiza.
 
+La contraseña no está en el código: se lee de la variable de entorno `SAUCE_PASSWORD`.
+En local, copia `.env.example` como `.env` y escribe la contraseña de SauceDemo (el `.env` no se sube a GitHub).
+En el CI viene del secret `SAUCE_PASSWORD` del repositorio.
+
 ```bash
 pip install -r requirements.txt
 python -m playwright install chromium
+cp .env.example .env    # en Windows: copy .env.example .env
 pytest -v
 ```
 
