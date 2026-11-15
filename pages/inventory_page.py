@@ -12,6 +12,8 @@ class InventoryPage(BasePage):
         # Cada imagen tiene un data-test que termina en "-img" (ej. "inventory-item-sauce-labs-backpack-img")
         self.imagenes_productos = page.locator('img[data-test$="-img"]')
         self.enlace_carrito = page.locator('[data-test="shopping-cart-link"]')
+        self.desplegable_orden = page.locator('[data-test="product-sort-container"]')
+        self.nombres_productos = page.locator('[data-test="inventory-item-name"]')
 
     def agregar_al_carrito(self, producto_id: str):
         # producto_id es la parte final del data-test, por ejemplo "sauce-labs-backpack"
@@ -24,3 +26,7 @@ class InventoryPage(BasePage):
         # .all() no espera: primero se espera a que aparezca al menos una imagen
         self.imagenes_productos.first.wait_for()
         return [imagen.get_attribute("src") for imagen in self.imagenes_productos.all()]
+
+    def ordenar(self, opcion: str):
+        # opcion es el texto visible, por ejemplo "Name (Z to A)"
+        self.desplegable_orden.select_option(label=opcion)

@@ -32,7 +32,8 @@ saucedemo/
 ├── tests/                      🔍 Los inspectores (los tests)
 │   ├── conftest.py
 │   ├── test_login.py
-│   └── test_checkout.py
+│   ├── test_checkout.py
+│   └── test_ordenar_productos.py
 │
 ├── data/                       🥫 La despensa (datos de prueba)
 │   ├── __init__.py
@@ -99,6 +100,7 @@ saucedemo/
 |---|---|
 | `test_login.py` | Los 9 tests de login. Cada uno usa las páginas para actuar y `expect()` para comprobar el resultado. |
 | `test_checkout.py` | Los 7 tests del checkout: entrar con productos, continuar con datos válidos, revisar el resumen, finalizar el pedido y abrir las 3 pantallas del checkout sin haber iniciado sesión. |
+| `test_ordenar_productos.py` | Los 4 tests de ordenar productos: 3 con una tabla de datos (`parametrize`: Z a A, precio de menor a mayor y de mayor a menor) y 1 que vuelve de Z a A a A a Z. |
 | `conftest.py` | Un archivo **especial** de pytest. Contiene las **fixtures** compartidas. |
 
 > 💡 **¿Qué es una fixture?** Es un "ayudante" que prepara algo antes del test y se lo entrega listo.
@@ -144,7 +146,7 @@ saucedemo/
 
 | Carpeta | Qué contiene |
 |---|---|
-| `casos/` | Tus casos de prueba **manuales** en tablas: login, carrito y checkout, más la comparación de lo que acertó la IA. Los tests automáticos nacen de aquí. |
+| `casos/` | Tus casos de prueba **manuales** en tablas: login, carrito, checkout y ordenar productos, más la comparación de lo que acertó la IA. Los tests automáticos nacen de aquí. |
 | `docs/` | El diagrama del flujo de bugs (`flujo-de-bugs.md`), la revisión del proyecto (`revision-del-proyecto.md`) y este documento (`estructura-del-proyecto.md`). |
 
 > 💡 Esto se llama **trazabilidad**: cada test automático corresponde a un caso escrito aquí.
@@ -232,7 +234,7 @@ Cuando escribes `pytest`, pasa esto:
 
 ```
 1. pytest lee pytest.ini         → "los tests están en tests/, la web es saucedemo.com"
-2. pytest abre tests/            → encuentra test_login.py y test_checkout.py
+2. pytest abre tests/            → encuentra test_login.py, test_checkout.py y test_ordenar_productos.py
 3. pytest lee conftest.py        → prepara las fixtures (abre el login, o llega hasta el paso 2 del checkout)
 4. El test toma datos de data/   → usuario y contraseña, o los datos del comprador
 5. El test usa pages/            → login_page.login(usuario, password) / paso_1.continuar(nombre, apellido, código)

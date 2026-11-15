@@ -91,6 +91,7 @@ Se ejecutan en GitHub Actions en cada push y PR, con informe HTML y trazas de lo
 |---|---|
 | [`tests/test_login.py`](tests/test_login.py) | TC-LOGIN-001 a 009 (el 009 marcado como fallo esperado por un bug conocido, issue #1) |
 | [`tests/test_checkout.py`](tests/test_checkout.py) | TC-CHECKOUT-001, 004, 018, 024, 033, 034 y 035 |
+| [`tests/test_ordenar_productos.py`](tests/test_ordenar_productos.py) | TC-SORT-001 a 004 (del 005 al 009 esperan respuesta del PO) |
 
 **Qué se automatiza:** en checkout, solo los casos 🔴 cuyo resultado esperado está confirmado, es decir,
 sin bug, sin "A confirmar" y sin preguntas al PO. Automatizar un resultado que nadie confirmó lo
