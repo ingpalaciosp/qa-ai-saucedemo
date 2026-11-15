@@ -9,7 +9,6 @@ class CheckoutStepTwoPage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self.titulo = page.locator('[data-test="title"]')
         self.resumen = page.locator('[data-test="checkout-summary-container"]')
         self.etiqueta_cantidad = page.locator('[data-test="cart-quantity-label"]')
         self.etiqueta_descripcion = page.locator('[data-test="cart-desc-label"]')

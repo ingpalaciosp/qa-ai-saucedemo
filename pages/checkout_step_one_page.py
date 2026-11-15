@@ -9,7 +9,6 @@ class CheckoutStepOnePage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self.titulo = page.locator('[data-test="title"]')
         self.formulario = page.locator('[data-test="checkout-info-container"]')
         self.campo_nombre = page.locator('[data-test="firstName"]')
         self.campo_apellido = page.locator('[data-test="lastName"]')
