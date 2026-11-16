@@ -2,7 +2,8 @@ from playwright.sync_api import Page
 
 
 class BasePage:
-    """Clase madre de todas las páginas: guarda la página, sabe abrirla y localiza el título de arriba (el login no tiene)"""
+    """Clase madre de todas las páginas: guarda la página, sabe abrirla
+    y localiza el título de arriba (el login no tiene)"""
 
     RUTA = "/"
 

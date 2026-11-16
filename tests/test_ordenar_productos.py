@@ -14,9 +14,18 @@ def test_tc_sort_004_ordenar_por_nombre_a_z(page: Page, iniciar_sesion):
 @pytest.mark.parametrize(
     "opcion, primero, ultimo",
     [
-        pytest.param("Name (Z to A)", "Test.allTheThings() T-Shirt (Red)", "Sauce Labs Backpack", id="TC-SORT-001_nombre_z_a"),
-        pytest.param("Price (low to high)", "Sauce Labs Onesie", "Sauce Labs Fleece Jacket", id="TC-SORT-002_precio_menor_a_mayor"),
-        pytest.param("Price (high to low)", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie", id="TC-SORT-003_precio_mayor_a_menor"),
+        pytest.param(
+            "Name (Z to A)", "Test.allTheThings() T-Shirt (Red)", "Sauce Labs Backpack",
+            id="TC-SORT-001_nombre_z_a",
+        ),
+        pytest.param(
+            "Price (low to high)", "Sauce Labs Onesie", "Sauce Labs Fleece Jacket",
+            id="TC-SORT-002_precio_menor_a_mayor",
+        ),
+        pytest.param(
+            "Price (high to low)", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie",
+            id="TC-SORT-003_precio_mayor_a_menor",
+        ),
     ],
 )
 def test_ordenar_productos(page: Page, iniciar_sesion, opcion, primero, ultimo):

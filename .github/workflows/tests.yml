@@ -27,6 +27,10 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
+      # Higiene general del código: imports sin usar, errores típicos, orden de imports
+      - name: Revisar el código con Ruff
+        run: ruff check .
+
       - name: Instalar el navegador
         run: python -m playwright install --with-deps chromium
 

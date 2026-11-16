@@ -9,6 +9,7 @@ Portafolio de QA sobre Sauce Demo: casos de prueba en Markdown y automatización
 - `data/`: datos de prueba (usuarios, textos esperados).
 - `tests/`: los tests. Las fixtures compartidas están en `tests/conftest.py`.
 - `scripts/revisar_reglas_qa.py`: linter que comprueba las normas marcadas con (CI). Se ejecuta en el CI antes de los tests. Una excepción justificada se marca al final de la línea con `# norma-ok: <motivo>`.
+- `ruff.toml`: configuración de Ruff, el linter general de Python. Se ejecuta en el CI después de instalar las dependencias.
 
 ## Normas de la automatización
 
@@ -26,7 +27,7 @@ Portafolio de QA sobre Sauce Demo: casos de prueba en Markdown y automatización
 
 ## Antes de dar algo por terminado
 
-- `python scripts/revisar_reglas_qa.py` sin problemas.
+- `python scripts/revisar_reglas_qa.py` y `python -m ruff check .` sin problemas.
 - `pytest` con los mismos resultados que antes del cambio, más los tests nuevos.
 - Forzar el fallo de cada test nuevo cambiando su esperado, y después dejarlo como estaba.
 - Actualizar la documentación afectada (`README.md`, `docs/estructura-del-proyecto.md`, Notas de los casos).
