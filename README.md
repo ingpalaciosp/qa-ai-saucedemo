@@ -13,7 +13,9 @@ acierta y dónde se equivoca, y automatizo solo los casos cuyo resultado esperad
 | [`.claude/skills/casos-de-prueba/`](.claude/skills/casos-de-prueba/SKILL.md) | La plantilla y las reglas que sigue la IA para escribir los casos |
 | [`.claude/skills/reportar-bug/`](.claude/skills/reportar-bug/SKILL.md) | Las reglas para que la IA convierta un caso fallido en el borrador de un issue, que yo reviso antes de publicar |
 | [`pages/`](pages/) · [`data/`](data/) · [`tests/`](tests/) | Automatización con Page Object Model, datos de prueba y tests |
-| [`.github/workflows/`](.github/workflows/tests.yml) | CI: los tests se ejecutan en cada push y PR |
+| [`CLAUDE.md`](CLAUDE.md) | Las normas del framework que sigue la IA (Claude Code) al escribir código |
+| [`scripts/revisar_reglas_qa.py`](scripts/revisar_reglas_qa.py) | Linter de esas normas en el CI: selectores en los tests, selectores frágiles, aserciones en los Page Objects, esperas fijas, tests sin aserción, sin Id de caso o saltados (skip) y Page Objects que no heredan de `BasePage` |
+| [`.github/workflows/`](.github/workflows/tests.yml) | CI: revisa las normas y ejecuta los tests en cada push y PR |
 | [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/bug.md) | Plantilla para reportar bugs con el mismo formato |
 | [`docs/`](docs/) | Estructura del proyecto, flujo de bugs y revisiones |
 
@@ -86,6 +88,13 @@ las personas como la IA. Sus reglas principales:
 Python + pytest + Playwright, con Page Object Model (una clase por pantalla en `pages/`), datos separados
 (`data/`) y las precondiciones de los casos como fixtures de pytest (`tests/conftest.py`).
 Se ejecutan en GitHub Actions en cada push y PR, con informe HTML y trazas de los fallos.
+
+**Normas del framework con guardarraíl:** [`CLAUDE.md`](CLAUDE.md) le dice a la IA cómo escribir el código
+(selectores solo en `pages/` y siempre con `data-test`, aserciones solo en los tests, nada de esperas fijas,
+el Id del caso en cada test…). Como la IA puede
+saltárselas, [`scripts/revisar_reglas_qa.py`](scripts/revisar_reglas_qa.py) las comprueba en el CI antes de los
+tests: si algo no las cumple, el pipeline falla en segundos y dice el archivo, la línea y cómo arreglarlo.
+En local: `python scripts/revisar_reglas_qa.py`.
 
 | Archivo | Casos automatizados |
 |---|---|

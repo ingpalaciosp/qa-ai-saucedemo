@@ -40,6 +40,9 @@ saucedemo/
 │   ├── usuarios.py
 │   └── checkout.py
 │
+├── scripts/                    🧹 Revisión de las normas del framework
+│   └── revisar_reglas_qa.py
+│
 ├── casos/                      📖 Casos de prueba escritos a mano
 ├── docs/                       📖 Documentación
 │
@@ -54,6 +57,7 @@ saucedemo/
 ├── .env.example                🔑 Plantilla de las variables de entorno (sin valores)
 ├── .gitattributes              ↩️ Finales de línea LF para todos
 │
+├── CLAUDE.md                   📏 Las normas del framework para la IA
 ├── .claude/  .mcp.json         🤝 Configuración para trabajar con IA
 │
 └── (carpetas automáticas: .venv, __pycache__, .pytest_cache, test-results, .playwright-mcp)
@@ -166,10 +170,11 @@ El archivo indica los pasos:
 
 1. Descargar el código.
 2. Instalar Python.
-3. Instalar las librerías (`requirements.txt`).
-4. Instalar el navegador Chromium.
-5. Ejecutar los tests.
-6. Guardar el informe, y las trazas y capturas si algo falló.
+3. Revisar las normas del framework (`scripts/revisar_reglas_qa.py`). Va antes de instalar nada, así que si algo no cumple las normas, el CI falla en segundos.
+4. Instalar las librerías (`requirements.txt`).
+5. Instalar el navegador Chromium.
+6. Ejecutar los tests.
+7. Guardar el informe, y las trazas y capturas si algo falló.
 
 > 💡 El punto al inicio de `.github` significa que es una carpeta **oculta**.
 > Es normal en carpetas de configuración.
@@ -208,6 +213,11 @@ Severidad, Prioridad y Módulo se añaden a mano. El flujo completo está en `do
 |---|---|
 | `.claude/` | La configuración de Claude Code y tus dos skills: `casos-de-prueba`, tu plantilla para escribir casos, y `reportar-bug`, que convierte un caso ❌ en el borrador de un issue y solo lo publica cuando tú lo apruebas. |
 | `.mcp.json` | Conecta el **servidor MCP de Playwright**. |
+| `CLAUDE.md` | Las **normas del framework** que Claude Code lee antes de escribir código: selectores solo en `pages/`, aserciones solo en los tests, nada de esperas fijas, el Id del caso en cada test… |
+| `scripts/revisar_reglas_qa.py` | El **guardarraíl** de esas normas, un **linter**: lee el código sin ejecutarlo y busca selectores en los tests, selectores frágiles (sin `data-test`, por posición o XPath), aserciones en los Page Objects, esperas fijas, tests sin aserción, sin Id de caso o saltados (skip) y Page Objects que no heredan de `BasePage`. Si encuentra algo, dice el archivo, la línea y cómo arreglarlo, y el CI falla. En local: `python scripts/revisar_reglas_qa.py`. |
+
+> 💡 Un **guardarraíl** es una comprobación automática que impide que algo malo llegue a `main`.
+> La IA puede saltarse una norma escrita; el script no se la salta.
 
 > 💡 Un **MCP** es un "enchufe" que permite a la IA usar herramientas; en este caso,
 > abrir y controlar un navegador.

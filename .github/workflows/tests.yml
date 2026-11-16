@@ -20,6 +20,10 @@ jobs:
           python-version: "3.14"
           cache: pip
 
+      # Va antes de instalar nada: si el código no sigue las normas, el CI falla en segundos
+      - name: Revisar las normas del framework
+        run: python scripts/revisar_reglas_qa.py
+
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
