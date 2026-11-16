@@ -51,6 +51,7 @@ saucedemo/
 │   └── ISSUE_TEMPLATE/bug.md   🐞 Plantilla para reportar bugs
 │
 ├── pytest.ini                  ⚙️ Configuración de pytest
+├── ruff.toml                   🧽 Configuración de Ruff (linter general)
 ├── requirements.txt            📦 Lista de "compras" (librerías)
 ├── README.md                   🪪 La portada del proyecto
 ├── .gitignore                  🚫 Lo que git no debe guardar
@@ -172,9 +173,10 @@ El archivo indica los pasos:
 2. Instalar Python.
 3. Revisar las normas del framework (`scripts/revisar_reglas_qa.py`). Va antes de instalar nada, así que si algo no cumple las normas, el CI falla en segundos.
 4. Instalar las librerías (`requirements.txt`).
-5. Instalar el navegador Chromium.
-6. Ejecutar los tests.
-7. Guardar el informe, y las trazas y capturas si algo falló.
+5. Revisar el código con Ruff (`ruff check .`): imports sin usar, errores típicos de Python y orden de los imports.
+6. Instalar el navegador Chromium.
+7. Ejecutar los tests.
+8. Guardar el informe, y las trazas y capturas si algo falló.
 
 > 💡 El punto al inicio de `.github` significa que es una carpeta **oculta**.
 > Es normal en carpetas de configuración.
@@ -197,6 +199,7 @@ Severidad, Prioridad y Módulo se añaden a mano. El flujo completo está en `do
 |---|---|
 | `pytest.ini` | La **configuración de pytest**. Dice dónde están los tests (`tests`), la dirección de la web (`base_url`), qué navegador usar y que guarde trazas y capturas **solo cuando un test falla**. |
 | `requirements.txt` | La **lista de compras**: las librerías que necesita el proyecto, con su versión exacta. Se instalan con `pip install -r requirements.txt`. |
+| `ruff.toml` | La **configuración de Ruff**, el linter general de Python: qué familias de reglas revisa (errores reales, estilo, orden de imports, trampas típicas y buenas prácticas de pytest) y el largo máximo de línea (120). Complementa a `scripts/revisar_reglas_qa.py`: Ruff revisa la higiene de cualquier código Python y el script, las normas propias del framework. En local: `python -m ruff check .` |
 | `README.md` | La **portada** del proyecto en GitHub. Explica qué es y muestra tus resultados. |
 | `.gitignore` | La lista de cosas que **git no debe guardar**, porque se generan solas o son privadas. |
 | `.env.example` | La **plantilla** de las variables de entorno: tiene el nombre `SAUCE_PASSWORD` sin su valor. Se copia como `.env` (privado, en `.gitignore`) y ahí se escribe la contraseña. |

@@ -59,7 +59,8 @@ def tiene_id_de_caso(test: ast.FunctionDef) -> bool:
         return True
     for decorador in test.decorator_list:
         if isinstance(decorador, ast.Call) and nombre_de_la_llamada(decorador) == "parametrize":
-            filas = decorador.args[1].elts if len(decorador.args) > 1 and isinstance(decorador.args[1], ast.List) else []
+            tiene_tabla = len(decorador.args) > 1 and isinstance(decorador.args[1], ast.List)
+            filas = decorador.args[1].elts if tiene_tabla else []
             ids = []
             for fila in filas:
                 if isinstance(fila, ast.Call) and nombre_de_la_llamada(fila) == "param":
@@ -99,7 +100,8 @@ def revisar_archivo(archivo: Path) -> list[tuple[int, str, str]]:
                 # Aserciones en los Page Objects
                 if llamada == "expect":
                     problemas.append((nodo.lineno, "Aserción dentro de un Page Object",
-                                      "las aserciones (expect) van en los tests; el Page Object solo tiene selectores y acciones"))
+                                      "las aserciones (expect) van en los tests; "
+                                      "el Page Object solo tiene selectores y acciones"))
                 # Selectores frágiles
                 if llamada == "locator":
                     selector = texto_del_selector(nodo)
@@ -108,7 +110,8 @@ def revisar_archivo(archivo: Path) -> list[tuple[int, str, str]]:
                                           "usa data-test; si el elemento no lo tiene, get_by_role o get_by_label"))
                     elif selector is not None and POSICION_O_XPATH.search(selector):
                         problemas.append((nodo.lineno, "Selector frágil (posición o XPath)",
-                                          "no dependas de la posición ni de XPath: apunta al elemento por su data-test"))
+                                          "no dependas de la posición ni de XPath: "
+                                          "apunta al elemento por su data-test"))
 
         # Tests saltados: @pytest.mark.skip, @pytest.mark.skipif o pytest.skip(...)
         if carpeta == "tests" and isinstance(nodo, ast.Attribute) and nodo.attr in ("skip", "skipif"):
@@ -129,7 +132,8 @@ def revisar_archivo(archivo: Path) -> list[tuple[int, str, str]]:
                                   f"{nodo.name} no tiene ningún expect ni assert: pasaría siempre"))
             if not tiene_id_de_caso(nodo):
                 problemas.append((nodo.lineno, "Test sin Id de caso",
-                                  f"{nodo.name}: pon el Id en el nombre (test_tc_sort_001_...) o en el id= de cada fila (id=\"TC-SORT-001_...\")"))
+                                  f"{nodo.name}: pon el Id en el nombre (test_tc_sort_001_...) "
+                                  f"o en el id= de cada fila (id=\"TC-SORT-001_...\")"))
 
     # Quitar las líneas con excepción justificada
     lineas = archivo.read_text(encoding="utf-8").splitlines()

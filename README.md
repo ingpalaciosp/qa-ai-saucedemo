@@ -15,7 +15,8 @@ acierta y dónde se equivoca, y automatizo solo los casos cuyo resultado esperad
 | [`pages/`](pages/) · [`data/`](data/) · [`tests/`](tests/) | Automatización con Page Object Model, datos de prueba y tests |
 | [`CLAUDE.md`](CLAUDE.md) | Las normas del framework que sigue la IA (Claude Code) al escribir código |
 | [`scripts/revisar_reglas_qa.py`](scripts/revisar_reglas_qa.py) | Linter de esas normas en el CI: selectores en los tests, selectores frágiles, aserciones en los Page Objects, esperas fijas, tests sin aserción, sin Id de caso o saltados (skip) y Page Objects que no heredan de `BasePage` |
-| [`.github/workflows/`](.github/workflows/tests.yml) | CI: revisa las normas y ejecuta los tests en cada push y PR |
+| [`ruff.toml`](ruff.toml) | Configuración de Ruff, el linter general de Python: imports sin usar, errores típicos, orden de imports |
+| [`.github/workflows/`](.github/workflows/tests.yml) | CI: revisa las normas y el código con Ruff, y ejecuta los tests en cada push y PR |
 | [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/bug.md) | Plantilla para reportar bugs con el mismo formato |
 | [`docs/`](docs/) | Estructura del proyecto, flujo de bugs y revisiones |
 
@@ -94,7 +95,8 @@ Se ejecutan en GitHub Actions en cada push y PR, con informe HTML y trazas de lo
 el Id del caso en cada test…). Como la IA puede
 saltárselas, [`scripts/revisar_reglas_qa.py`](scripts/revisar_reglas_qa.py) las comprueba en el CI antes de los
 tests: si algo no las cumple, el pipeline falla en segundos y dice el archivo, la línea y cómo arreglarlo.
-En local: `python scripts/revisar_reglas_qa.py`.
+En local: `python scripts/revisar_reglas_qa.py`. Además, [Ruff](ruff.toml) revisa la higiene general del código
+(imports sin usar, errores típicos, orden de imports): `python -m ruff check .`.
 
 | Archivo | Casos automatizados |
 |---|---|

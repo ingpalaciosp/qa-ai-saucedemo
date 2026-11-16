@@ -1,0 +1,19 @@
+# Configuración de Ruff, el linter general de Python (higiene del código).
+# Las normas propias del framework las revisa scripts/revisar_reglas_qa.py.
+# Se ejecuta en el CI y en local con: python -m ruff check .
+
+target-version = "py314"
+line-length = 120
+
+[lint]
+select = [
+    "E",   # errores de estilo (pycodestyle)
+    "F",   # errores reales: imports sin usar, nombres que no existen (pyflakes)
+    "I",   # imports ordenados siempre igual (isort)
+    "B",   # errores típicos que parecen correctos pero fallan (bugbear)
+    "PT",  # buenas prácticas de pytest
+]
+
+# Los nombres del parametrize se escriben en un solo texto: "opcion, primero, ultimo"
+[lint.flake8-pytest-style]
+parametrize-names-type = "csv"
