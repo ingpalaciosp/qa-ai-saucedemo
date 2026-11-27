@@ -15,6 +15,7 @@ class InventoryPage(BasePage):
         self.enlace_carrito = page.locator('[data-test="shopping-cart-link"]')
         self.desplegable_orden = page.locator('[data-test="product-sort-container"]')
         self.nombres_productos = page.locator('[data-test="inventory-item-name"]')
+        self.contador_carrito = page.locator('[data-test ="shopping-cart-badge"]')
 
     def agregar_al_carrito(self, producto_id: str):
         # producto_id es la parte final del data-test, por ejemplo "sauce-labs-backpack"
@@ -31,3 +32,6 @@ class InventoryPage(BasePage):
     def ordenar(self, opcion: str):
         # opcion es el texto visible, por ejemplo "Name (Z to A)"
         self.desplegable_orden.select_option(label=opcion)
+
+    def remover_producto_listado(self, product_id: str):
+        self.page.locator(f'[data-test="remove-{product_id}"]').click()

@@ -11,6 +11,10 @@ class CartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
         self.boton_checkout = page.locator('[data-test="checkout"]')
-
+        self.contador_carrito = page.locator('[data-test ="shopping-cart-badge"]')
+        
     def ir_al_checkout(self):
         self.boton_checkout.click()
+
+    def remover_carrito(self, opcion_id: str):
+        self.page.locator(f'[data-test="remove-{opcion_id}"]').click()
